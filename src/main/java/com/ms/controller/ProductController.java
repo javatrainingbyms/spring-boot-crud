@@ -5,6 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +20,18 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	@GetMapping(value="/count")
+	public Long countProducts() {
+		return productService.count();
+	}
+	@PutMapping (consumes = "application/json", produces="application/json")
+	public Product updateProduct(@RequestBody Product product) {
+		return productService.save(product);
+	}
+	@PostMapping (consumes = "application/json", produces="application/json")
+	public Product saveProduct(@RequestBody Product product) {
+		return productService.save(product);
+	}
 	@GetMapping
 	public Iterable<Product> getAllProducts(){
 		return productService.findAll();
@@ -24,6 +39,12 @@ public class ProductController {
 	@GetMapping(value="/{id}")
 	public Product getSingleProduct(@PathVariable("id") int id){
 		Optional<Product> optional=productService.findById(id);
-		return optional.get();
+		Product product=null;
+		if(optional.isPresent()) {
+			product=optional.get();//get method will extract the product object from optional
+		}else {
+			product=new Product();
+		}
+		return product;
 	}
 }
