@@ -1,12 +1,13 @@
 package com.ms.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ms.ProductRepository;
 import com.ms.entity.Product;
+import com.ms.repo.ProductRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -74,6 +75,16 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public void deleteAll() {
 		productRepository.deleteAll();
+	}
+
+	@Override
+	public List<Product> findProductsByBrand(String brand) {
+		return productRepository.findByBrand(brand);
+	}
+
+	@Override
+	public List<Product> findByPriceBetween(int low, int high) {
+		return productRepository.findByPriceBetween(low,high);
 	}
 
 }

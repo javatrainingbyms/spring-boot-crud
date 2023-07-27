@@ -1,5 +1,6 @@
 package com.ms.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,14 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	@GetMapping("/price/{low}/{high}")
+	public List<Product> findProductsByPriceRange(@PathVariable("low") int low, @PathVariable("high") int high){
+		return productService.findByPriceBetween(low,high);
+	}
+	@GetMapping("/brand/{brand}")
+	public List<Product> findProductsByBrand(@PathVariable("brand") String brand){
+		return productService.findProductsByBrand(brand);
+	}
 	@GetMapping(value="/count")
 	public Long countProducts() {
 		return productService.count();

@@ -1,5 +1,6 @@
 package com.ms.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -19,4 +20,6 @@ public interface ProductService {
 	void deleteAllById(Iterable<Integer> ids);
 	void deleteAll(Iterable<Product> entities);
 	void deleteAll();
+	List<Product> findProductsByBrand(String brand);
+	List<Product> findByPriceBetween(int low, int high);
 }
