@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ms.dto.PriceList;
 import com.ms.entity.Product;
+import com.ms.repo.ProductRepository;
 import com.ms.service.ProductService;
 
 @RestController
@@ -21,6 +23,17 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private ProductRepository repo;
+	
+	@GetMapping("/pricelist")
+	public List<Product> getPriceList(){
+		return repo.getPriceList();
+	}
+	@GetMapping("/lowprice")
+	public List<Product> findLowPriceProducts(){
+		return repo.findLow();
+	}
 	@GetMapping("/price/{low}/{high}")
 	public List<Product> findProductsByPriceRange(@PathVariable("low") int low, @PathVariable("high") int high){
 		return productService.findByPriceBetween(low,high);
@@ -54,6 +67,7 @@ public class ProductController {
 		}else {
 			product=new Product();
 		}
+		product.getCategory();
 		return product;
 	}
 }
