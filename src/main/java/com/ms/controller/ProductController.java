@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ms.dto.PriceList;
+import com.ms.dto.ProductCategory;
 import com.ms.entity.Product;
 import com.ms.repo.ProductRepository;
 import com.ms.service.ProductService;
@@ -26,13 +26,23 @@ public class ProductController {
 	@Autowired
 	private ProductRepository repo;
 	
+	@GetMapping("/sort/{field}")
+	public Iterable<Product> getSortedProducts(@PathVariable("field")  String field){
+		return productService.findAll(field);
+	}
+	
+	@GetMapping("/productcategory")
+	public List<ProductCategory> getProductWithCategory(){
+		return repo.getProductCategory();
+	}
 	@GetMapping("/pricelist")
 	public List<Product> getPriceList(){
 		return repo.getPriceList();
 	}
-	@GetMapping("/lowprice")
-	public List<Product> findLowPriceProducts(){
-		return repo.findLow();
+	@GetMapping("/lowprice/{amount}/{brand}")
+	public List<Product> findLowPriceProducts(@PathVariable("amount") int amount, @PathVariable("brand") String brand){
+		return repo.findLow(amount,brand);
+		//return repo.findByPriceLessThan(amount);
 	}
 	@GetMapping("/price/{low}/{high}")
 	public List<Product> findProductsByPriceRange(@PathVariable("low") int low, @PathVariable("high") int high){

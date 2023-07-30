@@ -21,10 +21,11 @@ public class Product {
 	private String name;
 	private String brand;
 	private int price;
-	
-	
+	@JsonIgnore
 	@ManyToOne
 	private Category category;
+	
+	
 	
 	public Product(String name, int price) {
 		super();

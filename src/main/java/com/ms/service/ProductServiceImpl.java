@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.ms.entity.Product;
@@ -85,6 +87,12 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<Product> findByPriceBetween(int low, int high) {
 		return productRepository.findByPriceBetween(low,high);
+	}
+
+	@Override
+	public Iterable<Product> findAll(String field) {
+		Sort sort=Sort.by(Direction.ASC, field);
+		return productRepository.findAll(sort);
 	}
 
 }

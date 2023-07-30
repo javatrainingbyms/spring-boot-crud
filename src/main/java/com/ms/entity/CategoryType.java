@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,17 +13,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Category {
+public class CategoryType {
 	@Id
 	private int id;
-	private String categoryCode;
-	private String categoryName;
-	@ManyToOne
-	private CategoryType  categoryType;
+	private String ctcode;
+	private String ctname;
 	@JsonIgnore
-	@OneToMany(mappedBy = "category")
-	private List<Product> products;
+	@OneToMany(mappedBy="categoryType")
+	private List<Category> categories;
 }

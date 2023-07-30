@@ -22,4 +22,5 @@ public interface ProductService {
 	void deleteAll();
 	List<Product> findProductsByBrand(String brand);
 	List<Product> findByPriceBetween(int low, int high);
+	Iterable<Product> findAll(String field);
 }
